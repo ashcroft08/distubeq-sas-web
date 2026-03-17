@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, serial, varchar, decimal, integer } from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, decimal, integer, boolean } from "drizzle-orm/pg-core";
 
 // Tabla: Materiales
 export const materiales = pgTable('materiales', {
@@ -18,11 +18,20 @@ export const diametros = pgTable('diametros', {
 export const productos = pgTable('productos', {
     idProducto: serial('id_producto').primaryKey(),
     idMaterial: integer('id_material').notNull().references(() => materiales.idMaterial),
-    idDiametro: integer('id_diametro').notNull().references(() => diametros.idDiametro),
-    tipo: varchar('tipo', { length: 20 }).notNull(),
+    nombreCompleto: varchar('nombre_completo', { length: 200 }).notNull(),
     fabricante: varchar('fabricante', { length: 100 }),
-    nombreCompleto: varchar('nombre_completo', { length: 200 }).notNull()
+    imagenUrl: varchar('imagen_url', { length: 500 }),
+    imagenPublicId: varchar('imagen_public_id', { length: 200 }),
+    estado: boolean('estado').default(true).notNull()
 });
+
+// Tabla Intermedia: Productos <-> Diametros
+export const productosDiametros = pgTable('productos_diametros', {
+    idProducto: integer('id_producto').notNull().references(() => productos.idProducto, { onDelete: 'cascade' }),
+    idDiametro: integer('id_diametro').notNull().references(() => diametros.idDiametro, { onDelete: 'cascade' }),
+}, (t) => ({
+    pk: [t.idProducto, t.idDiametro],
+}));
 
 // Relaciones
 export const materialesRelations = relations(materiales, ({ many }) => ({
@@ -30,16 +39,24 @@ export const materialesRelations = relations(materiales, ({ many }) => ({
 }));
 
 export const diametrosRelations = relations(diametros, ({ many }) => ({
-    productos: many(productos),
+    productos: many(productosDiametros),
 }));
 
-export const productosRelations = relations(productos, ({ one }) => ({
+export const productosRelations = relations(productos, ({ one, many }) => ({
     material: one(materiales, {
         fields: [productos.idMaterial],
         references: [materiales.idMaterial],
     }),
+    diametros: many(productosDiametros),
+}));
+
+export const productosDiametrosRelations = relations(productosDiametros, ({ one }) => ({
+    producto: one(productos, {
+        fields: [productosDiametros.idProducto],
+        references: [productos.idProducto],
+    }),
     diametro: one(diametros, {
-        fields: [productos.idDiametro],
+        fields: [productosDiametros.idDiametro],
         references: [diametros.idDiametro],
     }),
 }));

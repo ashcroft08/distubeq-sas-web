@@ -1,66 +1,140 @@
 <script>
+    import { enhance } from '$app/forms';
     import ProductTable from '$lib/components/admin/ProductTable.svelte';
+    import Modal from '$lib/components/ui/Modal.svelte';
+    import ProductForm from '$lib/components/admin/ProductForm.svelte';
+    import MaterialForm from '$lib/components/admin/MaterialForm.svelte';
+    import DiameterForm from '$lib/components/admin/DiameterForm.svelte';
 
-    const mockProducts = [
-        {
-            id: 1,
-            name: 'Martillo de Garra 16oz',
-            sku: 'HT-88219',
-            category: 'Herramientas',
-            categoryColor: 'bg-blue-100 text-blue-800',
-            price: 24.90,
-            active: true,
-            image: 'https://images.unsplash.com/photo-1586864387917-f53bc2644343?auto=format&fit=crop&q=80&w=100&h=100'
-        },
-        {
-            id: 2,
-            name: 'Pintura Vinilo Blanco Galón',
-            sku: 'PT-0043',
-            category: 'Pinturas',
-            categoryColor: 'bg-purple-100 text-purple-800',
-            price: 85.00,
-            active: false,
-            image: 'https://images.unsplash.com/photo-1589939705384-5185138a04b9?auto=format&fit=crop&q=80&w=100&h=100'
-        },
-        {
-            id: 3,
-            name: 'Taladro Percutor 500W',
-            sku: 'EP-1290',
-            category: 'Eléctricos',
-            categoryColor: 'bg-amber-100 text-amber-800',
-            price: 189.90,
-            active: true,
-            image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=100&h=100'
+    let { data } = $props();
+
+    // Modal States
+    let showProductModal = $state(false);
+    let showMaterialModal = $state(false);
+    let showDiameterModal = $state(false);
+    
+    let selectedProduct = $state(null);
+
+    function openCreateProduct() {
+        selectedProduct = null;
+        showProductModal = true;
+    }
+
+    /** @param {any} product */
+    function openEditProduct(product) {
+        selectedProduct = product;
+        showProductModal = true;
+    }
+
+    /** @type {HTMLFormElement | undefined} */
+    let statusForm = $state();
+    let toggleId = $state(null);
+    let toggleCurrentState = $state(null);
+
+    /** @param {any} product */
+    function handleToggleStatus(product) {
+        toggleId = product.idProducto;
+        toggleCurrentState = product.estado;
+        // Wait for state to update then submit
+        setTimeout(() => {
+            if (statusForm) statusForm.requestSubmit();
+        }, 0);
+    }
+
+    /** @type {HTMLFormElement | undefined} */
+    let deleteForm = $state();
+    let deleteId = $state(null);
+
+    /** @param {any} product */
+    function handleDelete(product) {
+        if (confirm('¿Estás seguro de eliminar este producto?')) {
+            deleteId = product.idProducto;
+            setTimeout(() => {
+                if (deleteForm) deleteForm.requestSubmit();
+            }, 0);
         }
-    ];
+    }
 </script>
 
 <div class="space-y-6">
-    <!-- Filter Bar -->
-    <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-        <div class="flex flex-col md:flex-row gap-4 items-center">
-            <div class="relative flex-1 w-full text-slate-400 focus-within:text-[#f97316] transition-colors">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-                </span>
-                <input class="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-lg focus:ring-0 focus:border-[#f97316] outline-none transition-all text-sm text-slate-600 bg-gray-50/50" placeholder="Buscar por nombre o SKU..." type="text"/>
-            </div>
-            <div class="flex flex-wrap gap-4 w-full md:w-auto">
-                <select class="block w-full md:w-48 pl-3 pr-10 py-2.5 text-sm border-slate-200 focus:outline-none focus:border-[#f97316] rounded-lg bg-gray-50/50">
-                    <option value="">Todas las categorías</option>
-                    <option>Herramientas Manuales</option>
-                    <option>Plomería</option>
-                    <option>Construcción</option>
-                    <option>Eléctricos</option>
-                </select>
-                <select class="block w-full md:w-40 pl-3 pr-10 py-2.5 text-sm border-slate-200 focus:outline-none focus:border-[#f97316] rounded-lg bg-gray-50/50">
-                    <option value="">Estado</option>
-                    <option>Activo</option>
-                    <option>Inactivo</option>
-                </select>
-            </div>
+    <!-- Header with Actions -->
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-900">Gestión de Inventario</h1>
+            <p class="text-slate-500 text-sm">Administra tus productos, materiales y medidas.</p>
         </div>
-    </section>
+        <div class="flex flex-wrap gap-3">
+            <button 
+                onclick={() => showMaterialModal = true}
+                class="px-4 py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+            >
+                + Material
+            </button>
+            <button 
+                onclick={() => showDiameterModal = true}
+                class="px-4 py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+            >
+                + Medida
+            </button>
+            <button 
+                onclick={openCreateProduct}
+                class="px-5 py-2 text-sm font-bold text-white bg-[#f97316] rounded-lg shadow-lg shadow-orange-100 hover:bg-orange-600 transition-all transform hover:scale-[1.02]"
+            >
+                Nuevo Producto
+            </button>
+        </div>
+    </header>
 
-    <ProductTable products={mockProducts} />
+    <!-- Main Table Section -->
+    <ProductTable 
+        products={data.products} 
+        onEdit={openEditProduct}
+        onToggleStatus={handleToggleStatus}
+        onDelete={handleDelete}
+    />
 </div>
+
+<!-- Hidden form for toggling status -->
+<form 
+    method="POST" 
+    action="?/toggleProductStatus" 
+    use:enhance 
+    bind:this={statusForm} 
+    class="hidden"
+>
+    <input type="hidden" name="id" value={toggleId} />
+    <input type="hidden" name="estado" value={toggleCurrentState} />
+</form>
+
+<!-- Hidden form for deleting product -->
+<form 
+    method="POST" 
+    action="?/deleteProduct" 
+    use:enhance 
+    bind:this={deleteForm} 
+    class="hidden"
+>
+    <input type="hidden" name="id" value={deleteId} />
+</form>
+
+<!-- MODALS -->
+
+<!-- Product Modal -->
+<Modal bind:show={showProductModal} title={selectedProduct ? 'Editar Producto' : 'Agregar Nuevo Producto'} maxWidth="max-w-xl" closeOnBackdropClick={false}>
+    <ProductForm 
+        product={selectedProduct} 
+        materiales={data.materiales || []} 
+        diametros={data.diametros || []}
+        onComplete={() => showProductModal = false}
+    />
+</Modal>
+
+<!-- Material Modal -->
+<Modal bind:show={showMaterialModal} title="Administrar Materiales" maxWidth="max-w-md" closeOnBackdropClick={false}>
+    <MaterialForm materiales={data.materiales || []} onComplete={() => {}} />
+</Modal>
+
+<!-- Diameter Modal -->
+<Modal bind:show={showDiameterModal} title="Administrar Diámetros" maxWidth="max-w-md" closeOnBackdropClick={false}>
+    <DiameterForm diametros={data.diametros || []} onComplete={() => {}} />
+</Modal>
