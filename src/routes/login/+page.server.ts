@@ -1,7 +1,10 @@
 import { authService } from '$lib/server/services/auth.service';
 import { fail, redirect } from '@sveltejs/kit';
+// Importamos isRedirect para un manejo de errores más limpio
+import { isRedirect } from '@sveltejs/kit';
 
 export const load = async ({ locals }) => {
+	// Si ya hay sesión, no tiene sentido mostrar el login
 	if (locals.session) {
 		throw redirect(303, '/admin');
 	}
@@ -14,31 +17,34 @@ export const actions = {
 		const email = formData.get('email');
 		const password = formData.get('password');
 
-		if (!email || !password) {
-			return fail(400, { message: 'Email and password are required' });
+		// Validación 1: Que existan y sean strings (evita que envíen archivos)
+		if (!email || !password || typeof email !== 'string' || typeof password !== 'string') {
+			return fail(400, { message: 'El correo y la contraseña son obligatorios.' });
 		}
 
 		try {
-			const response = await authService.login(email.toString(), password.toString(), request);
-			
-			// better-auth handles the cookies via response headers if asResponse is true
-			// and plugins like sveltekitCookies are used. 
-			// However, since we are in an action, we might need a more manual approach if not using the middleware.
-			// Let's assume the authService handles it or we use the better-auth client in the frontend.
-			
-			// If we use asResponse: true, we can return the response headers.
+			// Nota: Dependiendo de tu authService, puede que necesites pasarle 
+			// todo el objeto `event` o el objeto `cookies` para que setee la sesión correctamente.
+			const response = await authService.login(email, password, request);
+
 			if (response.status === 200) {
+				// Login exitoso
 				throw redirect(303, '/admin');
 			} else {
+				// Parseamos el error del backend
 				const error = await response.json();
-				return fail(400, { message: error.message || 'Error al iniciar sesión' });
+				return fail(400, { message: error.message || 'Credenciales incorrectas. Verifique sus datos.' });
 			}
 		} catch (error) {
-			if (error && typeof error === 'object' && 'status' in error && 'location' in error) {
+			// SvelteKit maneja los redirects lanzándolos como errores.
+			// Usamos isRedirect() para dejarlo pasar y que haga la redirección.
+			if (isRedirect(error)) {
 				throw error;
 			}
-			console.error('Login action error:', error);
-			return fail(500, { message: 'Internal server error' });
+
+			// Si es un error real (ej. se cayó la base de datos)
+			console.error('Error en action de login:', error);
+			return fail(500, { message: 'Ocurrió un error en el servidor. Intente más tarde.' });
 		}
 	}
 };
