@@ -9,6 +9,8 @@ export const actions = {
         });
         
         // Manually clearing the session token cookie as a fallback for maximum security
+        // Limpiamos tanto con el prefijo personalizado como el default por si acaso
+        cookies.delete('distubeq.session_token', { path: '/' });
         cookies.delete('better-auth.session_token', { path: '/' });
         
         throw redirect(303, '/login');

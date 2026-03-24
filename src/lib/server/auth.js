@@ -10,5 +10,22 @@ export const auth = betterAuth({
 	secret: env.BETTER_AUTH_SECRET,
 	database: drizzleAdapter(db, { provider: 'pg' }),
 	emailAndPassword: { enabled: true },
+	session: {
+		expiresIn: 60 * 60 * 8, // 8 horas (en segundos)
+		updateAge: 60 * 60, // Renueva la sesión si pasa 1 hora de actividad
+		cookieCache: {
+			enabled: true,
+			maxAge: 60 * 5 // Cache de 5 minutos para evitar consultas excesivas a DB
+		}
+	},
+	advanced: {
+		cookiePrefix: 'distubeq',
+		defaultCookieAttributes: {
+			httpOnly: true,
+			sameSite: 'lax',
+			secure: env.NODE_ENV === 'production',
+			path: '/'
+		}
+	},
 	plugins: [sveltekitCookies(getRequestEvent)] // make sure this is the last plugin in the array
 });

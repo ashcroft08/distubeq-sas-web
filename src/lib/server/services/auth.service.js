@@ -36,6 +36,24 @@ export class AuthService {
 				asResponse: true
 			});
 
+			if (response.status !== 200) {
+				// Parse the error body from better-auth
+				let errorCode = 'UNKNOWN_ERROR';
+				try {
+					const errorBody = await response.json();
+					errorCode = errorBody?.code || errorBody?.message || 'UNKNOWN_ERROR';
+				} catch {
+					// Could not parse JSON — treat as unknown
+				}
+
+				const err = new Error(errorCode);
+				// @ts-ignore
+				err.code = errorCode;
+				// @ts-ignore
+				err.statusCode = response.status;
+				throw err;
+			}
+
 			return response;
 		} catch (error) {
 			console.error('AuthService.login error:', error);
