@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { fade, fly } from 'svelte/transition';
+	import logoImg from '$lib/assets/images/Logo_Distubeq.webp';
 
 	let { form, data } = $props();
 	let loading = $state(false);
@@ -21,19 +22,14 @@
 	></div>
 
 	<main class="relative z-10 w-full max-w-md" in:fly={{ y: 20, duration: 800 }}>
-		<!-- Logo placeholder fuera de la card -->
+		<!-- Logo FUERA de la card -->
 		<div class="mb-6 flex justify-center">
-			<div class="logo-placeholder group">
-				<svg class="h-20 w-20 text-[#1b3a6b] transition-transform duration-300 group-hover:scale-105" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<rect x="4" y="4" width="72" height="72" rx="16" stroke="currentColor" stroke-width="3" fill="white" class="drop-shadow-sm"/>
-					<rect x="12" y="12" width="56" height="56" rx="10" fill="currentColor" opacity="0.06"/>
-					<path d="M40 24C33.373 24 28 29.373 28 36c0 4.418 2.388 8.268 5.941 10.342V52a2 2 0 002 2h8.118a2 2 0 002-2v-5.658C49.612 44.268 52 40.418 52 36c0-6.627-5.373-12-12-12z" fill="currentColor" opacity="0.12"/>
-					<circle cx="40" cy="36" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
-					<path d="M40 30v12M34 36h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-					<rect x="34" y="50" width="12" height="4" rx="1.5" fill="currentColor" opacity="0.25"/>
-					<rect x="36" y="55" width="8" height="2" rx="1" fill="currentColor" opacity="0.15"/>
-				</svg>
-				<p class="mt-2 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">Sin Logo</p>
+			<div class="group">
+				<img
+					src={logoImg}
+					alt="Distubeq SAS"
+					class="h-32 w-40 rounded-2xl object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+				/>
 			</div>
 		</div>
 
@@ -41,8 +37,18 @@
 			<div class="bg-gradient-to-b from-white to-gray-50/50 px-6 pt-8 pb-6 text-center sm:px-10">
 				<div class="mb-3 flex justify-center">
 					<div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50">
-						<svg class="h-7 w-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+						<svg
+							class="h-7 w-7 text-green-600"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+							/>
 						</svg>
 					</div>
 				</div>
@@ -56,9 +62,15 @@
 
 			{#if form?.success}
 				<div class="space-y-5 px-6 pb-10 sm:px-10" in:fade>
-					<div class="flex items-center gap-3 rounded-xl border border-green-100 bg-green-50 p-4 text-sm font-semibold text-green-700">
+					<div
+						class="flex items-center gap-3 rounded-xl border border-green-100 bg-green-50 p-4 text-sm font-semibold text-green-700"
+					>
 						<svg class="h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-							<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+							<path
+								fill-rule="evenodd"
+								d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+								clip-rule="evenodd"
+							/>
 						</svg>
 						{form.message}
 					</div>
@@ -68,8 +80,18 @@
 						href="/login"
 					>
 						<span>Ir al Login</span>
-						<svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+						<svg
+							class="h-4 w-4 transition-transform group-hover:translate-x-1"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 7l5 5m0 0l-5 5m5-5H6"
+							/>
 						</svg>
 					</a>
 				</div>
@@ -92,7 +114,11 @@
 							class="flex items-center gap-3 rounded-xl border border-red-100 bg-red-50 p-3 text-sm font-semibold text-red-600"
 						>
 							<svg class="h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-								<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+								<path
+									fill-rule="evenodd"
+									d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+									clip-rule="evenodd"
+								/>
 							</svg>
 							{form.message}
 						</div>
@@ -100,13 +126,23 @@
 
 					<!-- Email (readonly si viene por query) -->
 					<div class="space-y-1.5">
-						<label class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase" for="email">
+						<label
+							class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase"
+							for="email"
+						>
 							Correo Electrónico
 						</label>
 						<div class="group relative">
-							<span class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors">
+							<span
+								class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors"
+							>
 								<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+									/>
 								</svg>
 							</span>
 							<input
@@ -124,17 +160,27 @@
 
 					<!-- Token / Código -->
 					<div class="space-y-1.5">
-						<label class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase" for="token">
+						<label
+							class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase"
+							for="token"
+						>
 							Código de Recuperación
 						</label>
 						<div class="group relative">
-							<span class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors">
+							<span
+								class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors"
+							>
 								<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"
+									/>
 								</svg>
 							</span>
 							<input
-								class="focus:border-brand-navy w-full rounded-xl border-2 border-gray-100 bg-gray-50/50 py-3 pr-4 pl-11 text-center text-lg font-bold tracking-[0.5em] transition-all duration-200 outline-none placeholder:text-gray-300 placeholder:tracking-normal hover:bg-gray-50 focus:bg-white focus:ring-0"
+								class="focus:border-brand-navy w-full rounded-xl border-2 border-gray-100 bg-gray-50/50 py-3 pr-4 pl-11 text-center text-lg font-bold tracking-[0.5em] transition-all duration-200 outline-none placeholder:tracking-normal placeholder:text-gray-300 hover:bg-gray-50 focus:bg-white focus:ring-0"
 								id="token"
 								name="token"
 								placeholder="000000"
@@ -146,18 +192,30 @@
 								autocomplete="one-time-code"
 							/>
 						</div>
-						<p class="ml-1 text-[10px] font-medium text-gray-400">Código de 6 dígitos enviado a tu correo</p>
+						<p class="ml-1 text-[10px] font-medium text-gray-400">
+							Código de 6 dígitos enviado a tu correo
+						</p>
 					</div>
 
 					<!-- Nueva Contraseña -->
 					<div class="space-y-1.5">
-						<label class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase" for="password">
+						<label
+							class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase"
+							for="password"
+						>
 							Nueva Contraseña
 						</label>
 						<div class="group relative">
-							<span class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors">
+							<span
+								class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors"
+							>
 								<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+									/>
 								</svg>
 							</span>
 							<input
@@ -172,16 +230,31 @@
 							<button
 								type="button"
 								class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 transition-colors hover:text-gray-600"
-								onclick={() => showPassword = !showPassword}
+								onclick={() => (showPassword = !showPassword)}
 							>
 								{#if showPassword}
 									<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L6.5 6.5m3.378 3.378L6.5 6.5m0 0L3 3m3.5 3.5L13.5 13.5M21 21l-3.5-3.5m0 0l-3.378-3.378m3.378 3.378L21 21M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L6.5 6.5m3.378 3.378L6.5 6.5m0 0L3 3m3.5 3.5L13.5 13.5M21 21l-3.5-3.5m0 0l-3.378-3.378m3.378 3.378L21 21M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+										/>
 									</svg>
 								{:else}
 									<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+										/>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+										/>
 									</svg>
 								{/if}
 							</button>
@@ -190,13 +263,23 @@
 
 					<!-- Confirmar Contraseña -->
 					<div class="space-y-1.5">
-						<label class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase" for="confirmPassword">
+						<label
+							class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase"
+							for="confirmPassword"
+						>
 							Confirmar Contraseña
 						</label>
 						<div class="group relative">
-							<span class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors">
+							<span
+								class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors"
+							>
 								<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+									/>
 								</svg>
 							</span>
 							<input
@@ -211,16 +294,31 @@
 							<button
 								type="button"
 								class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 transition-colors hover:text-gray-600"
-								onclick={() => showConfirmPassword = !showConfirmPassword}
+								onclick={() => (showConfirmPassword = !showConfirmPassword)}
 							>
 								{#if showConfirmPassword}
 									<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L6.5 6.5m3.378 3.378L6.5 6.5m0 0L3 3m3.5 3.5L13.5 13.5M21 21l-3.5-3.5m0 0l-3.378-3.378m3.378 3.378L21 21M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L6.5 6.5m3.378 3.378L6.5 6.5m0 0L3 3m3.5 3.5L13.5 13.5M21 21l-3.5-3.5m0 0l-3.378-3.378m3.378 3.378L21 21M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+										/>
 									</svg>
 								{:else}
 									<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+										/>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+										/>
 									</svg>
 								{/if}
 							</button>
@@ -235,13 +333,34 @@
 						>
 							{#if loading}
 								<svg class="h-5 w-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-									<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-									<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+									<circle
+										class="opacity-25"
+										cx="12"
+										cy="12"
+										r="10"
+										stroke="currentColor"
+										stroke-width="4"
+									></circle>
+									<path
+										class="opacity-75"
+										fill="currentColor"
+										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+									></path>
 								</svg>
 							{:else}
 								<span>Restablecer Contraseña</span>
-								<svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+								<svg
+									class="h-4 w-4 transition-transform group-hover:translate-x-1"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M5 13l4 4L19 7"
+									/>
 								</svg>
 							{/if}
 						</button>
@@ -253,7 +372,12 @@
 							href="/login"
 						>
 							<svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M10 19l-7-7m0 0l7-7m-7 7h18"
+								/>
 							</svg>
 							Volver al Login
 						</a>

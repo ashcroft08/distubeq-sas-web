@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { fade, fly } from 'svelte/transition';
+	import logoImg from '$lib/assets/images/Logo_Distubeq.webp';
 
 	let { form } = $props();
 	let loading = $state(false);
@@ -19,19 +20,14 @@
 	></div>
 
 	<main class="relative z-10 w-full max-w-md" in:fly={{ y: 20, duration: 800 }}>
-		<!-- Logo placeholder fuera de la card -->
+		<!-- Logo FUERA de la card -->
 		<div class="mb-6 flex justify-center">
-			<div class="logo-placeholder group">
-				<svg class="h-20 w-20 text-[#1b3a6b] transition-transform duration-300 group-hover:scale-105" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<rect x="4" y="4" width="72" height="72" rx="16" stroke="currentColor" stroke-width="3" fill="white" class="drop-shadow-sm"/>
-					<rect x="12" y="12" width="56" height="56" rx="10" fill="currentColor" opacity="0.06"/>
-					<path d="M40 24C33.373 24 28 29.373 28 36c0 4.418 2.388 8.268 5.941 10.342V52a2 2 0 002 2h8.118a2 2 0 002-2v-5.658C49.612 44.268 52 40.418 52 36c0-6.627-5.373-12-12-12z" fill="currentColor" opacity="0.12"/>
-					<circle cx="40" cy="36" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
-					<path d="M40 30v12M34 36h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-					<rect x="34" y="50" width="12" height="4" rx="1.5" fill="currentColor" opacity="0.25"/>
-					<rect x="36" y="55" width="8" height="2" rx="1" fill="currentColor" opacity="0.15"/>
-				</svg>
-				<p class="mt-2 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">Sin Logo</p>
+			<div class="group">
+				<img
+					src={logoImg}
+					alt="Distubeq SAS"
+					class="h-32 w-40 rounded-2xl object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+				/>
 			</div>
 		</div>
 
@@ -39,8 +35,18 @@
 			<div class="bg-gradient-to-b from-white to-gray-50/50 px-6 pt-8 pb-6 text-center sm:px-10">
 				<div class="mb-3 flex justify-center">
 					<div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50">
-						<svg class="h-7 w-7 text-[#e8660a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+						<svg
+							class="h-7 w-7 text-[#e8660a]"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+							/>
 						</svg>
 					</div>
 				</div>
@@ -54,9 +60,15 @@
 
 			{#if form?.success}
 				<div class="space-y-5 px-6 pb-10 sm:px-10" in:fade>
-					<div class="flex items-center gap-3 rounded-xl border border-green-100 bg-green-50 p-4 text-sm font-semibold text-green-700">
+					<div
+						class="flex items-center gap-3 rounded-xl border border-green-100 bg-green-50 p-4 text-sm font-semibold text-green-700"
+					>
 						<svg class="h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-							<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+							<path
+								fill-rule="evenodd"
+								d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+								clip-rule="evenodd"
+							/>
 						</svg>
 						{form.message}
 					</div>
@@ -66,8 +78,18 @@
 						href="/login/recovery/reset?email={encodeURIComponent(form.email)}"
 					>
 						<span>Ingresar Código</span>
-						<svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+						<svg
+							class="h-4 w-4 transition-transform group-hover:translate-x-1"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 7l5 5m0 0l-5 5m5-5H6"
+							/>
 						</svg>
 					</a>
 
@@ -77,7 +99,12 @@
 							href="/login"
 						>
 							<svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M10 19l-7-7m0 0l7-7m-7 7h18"
+								/>
 							</svg>
 							Volver al Login
 						</a>
@@ -102,20 +129,34 @@
 							class="flex items-center gap-3 rounded-xl border border-red-100 bg-red-50 p-3 text-sm font-semibold text-red-600"
 						>
 							<svg class="h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-								<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+								<path
+									fill-rule="evenodd"
+									d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+									clip-rule="evenodd"
+								/>
 							</svg>
 							{form.message}
 						</div>
 					{/if}
 
 					<div class="space-y-1.5">
-						<label class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase" for="email">
+						<label
+							class="ml-1 text-xs font-bold tracking-wider text-gray-500 uppercase"
+							for="email"
+						>
 							Correo Electrónico
 						</label>
 						<div class="group relative">
-							<span class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors">
+							<span
+								class="group-focus-within:text-brand-navy absolute top-1/2 left-4 -translate-y-1/2 text-gray-400 transition-colors"
+							>
 								<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+									/>
 								</svg>
 							</span>
 							<input
@@ -137,13 +178,34 @@
 						>
 							{#if loading}
 								<svg class="h-5 w-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-									<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-									<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+									<circle
+										class="opacity-25"
+										cx="12"
+										cy="12"
+										r="10"
+										stroke="currentColor"
+										stroke-width="4"
+									></circle>
+									<path
+										class="opacity-75"
+										fill="currentColor"
+										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+									></path>
 								</svg>
 							{:else}
 								<span>Enviar Código</span>
-								<svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+								<svg
+									class="h-4 w-4 transition-transform group-hover:translate-x-1"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+									/>
 								</svg>
 							{/if}
 						</button>
@@ -155,7 +217,12 @@
 							href="/login"
 						>
 							<svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M10 19l-7-7m0 0l7-7m-7 7h18"
+								/>
 							</svg>
 							Volver al Login
 						</a>

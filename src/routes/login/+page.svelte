@@ -1,7 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { fade, fly } from 'svelte/transition';
-	import logoImg from '$lib/assets/images/no_image.webp';
+	import logoImg from '$lib/assets/images/Logo_Distubeq.webp';
 
 	let { form, data } = $props();
 	let loading = $state(false);
@@ -24,13 +24,12 @@
 		<div class="mb-6 flex justify-center">
 			<div class="group">
 				<img
-					src="/src/lib/assets/images/no_image.webp"
+					src={logoImg}
 					alt="Distubeq SAS"
-					class="h-20 w-20 rounded-2xl object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+					class="h-32 w-40 rounded-2xl object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
 				/>
 			</div>
 		</div>
-
 
 		<div class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl">
 			<div class="bg-gradient-to-b from-white to-gray-50/50 px-6 pt-8 pb-6 text-center sm:px-10">
