@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { fade, fly } from 'svelte/transition';
+	import logoImg from '$lib/assets/images/no_image.webp';
 
 	let { form, data } = $props();
 	let loading = $state(false);
@@ -21,19 +22,15 @@
 	<main class="relative z-10 w-full max-w-md" in:fly={{ y: 20, duration: 800 }}>
 		<!-- Logo FUERA de la card -->
 		<div class="mb-6 flex justify-center">
-			<div class="logo-placeholder group">
-				<svg class="h-20 w-20 text-[#1b3a6b] transition-transform duration-300 group-hover:scale-105" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<rect x="4" y="4" width="72" height="72" rx="16" stroke="currentColor" stroke-width="3" fill="white" class="drop-shadow-sm"/>
-					<rect x="12" y="12" width="56" height="56" rx="10" fill="currentColor" opacity="0.06"/>
-					<path d="M40 24C33.373 24 28 29.373 28 36c0 4.418 2.388 8.268 5.941 10.342V52a2 2 0 002 2h8.118a2 2 0 002-2v-5.658C49.612 44.268 52 40.418 52 36c0-6.627-5.373-12-12-12z" fill="currentColor" opacity="0.12"/>
-					<circle cx="40" cy="36" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
-					<path d="M40 30v12M34 36h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-					<rect x="34" y="50" width="12" height="4" rx="1.5" fill="currentColor" opacity="0.25"/>
-					<rect x="36" y="55" width="8" height="2" rx="1" fill="currentColor" opacity="0.15"/>
-				</svg>
-				<p class="mt-2 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">Sin Logo</p>
+			<div class="group">
+				<img
+					src="/src/lib/assets/images/no_image.webp"
+					alt="Distubeq SAS"
+					class="h-20 w-20 rounded-2xl object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+				/>
 			</div>
 		</div>
+
 
 		<div class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl">
 			<div class="bg-gradient-to-b from-white to-gray-50/50 px-6 pt-8 pb-6 text-center sm:px-10">
@@ -192,7 +189,7 @@
 								></path></svg
 							>
 						{:else}
-							<span>Entrar al Sistema</span>
+							<span>Iniciar Sesión</span>
 							<svg
 								class="h-4 w-4 transition-transform group-hover:translate-x-1"
 								fill="none"
@@ -262,10 +259,21 @@
 		animation: shake 0.4s ease-in-out;
 	}
 	@keyframes shake {
-		0%, 100% { transform: translateX(0); }
-		20% { transform: translateX(-6px); }
-		40% { transform: translateX(6px); }
-		60% { transform: translateX(-4px); }
-		80% { transform: translateX(4px); }
+		0%,
+		100% {
+			transform: translateX(0);
+		}
+		20% {
+			transform: translateX(-6px);
+		}
+		40% {
+			transform: translateX(6px);
+		}
+		60% {
+			transform: translateX(-4px);
+		}
+		80% {
+			transform: translateX(4px);
+		}
 	}
 </style>

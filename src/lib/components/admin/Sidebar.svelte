@@ -1,6 +1,7 @@
 <script>
     import { enhance } from '$app/forms';
-    import { fly, fade } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
+    import logoImg from '$lib/assets/images/no_image.webp';
 
     let { active = 'Productos' } = $props();
     let isCollapsed = $state(false);
@@ -25,7 +26,7 @@
     <!-- Toggle Button -->
     <button 
         onclick={toggleSidebar}
-        class="absolute -right-3 top-20 w-6 h-6 bg-[#f97316] rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform z-50 border-2 border-[#1e293b]"
+        class="absolute -right-3 top-20 w-6 h-6 bg-[#475569] rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform z-50 border-2 border-[#1e293b]"
         title={isCollapsed ? "Expandir" : "Colapsar"}
     >
         <svg class="w-4 h-4 transition-transform duration-300 {isCollapsed ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,24 +34,19 @@
         </svg>
     </button>
 
-    <div class="p-4 border-b border-slate-700 overflow-hidden shrink-0">
-        <h1 class="text-xl font-bold tracking-tight flex items-center gap-3">
-            <span class="p-2 bg-[#f97316] rounded-lg shrink-0">
-                <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                </svg>
-            </span>
-            {#if !isCollapsed}
-                <span in:fade={{duration: 200}} class="whitespace-nowrap">DISTUBEQ SAS</span>
-            {/if}
-        </h1>
+    <div class="p-4 border-b border-slate-700 overflow-hidden shrink-0 flex items-center justify-center">
+        <img 
+            src={logoImg} 
+            alt="Logo" 
+            class="{isCollapsed ? 'h-10 w-10' : 'h-12 w-12'} rounded-xl object-contain transition-all duration-300"
+        />
     </div>
     
     <nav class="flex-1 p-3 overflow-y-auto space-y-2 sidebar-scroll overflow-x-hidden">
         {#each menuItems as item (item.id)}
             <a 
                 href={item.path} 
-                class="flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group {active === item.name ? 'bg-[#f97316] text-white font-medium shadow-lg' : 'text-slate-400 hover:bg-slate-800'}"
+                class="flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group {active === item.name ? 'bg-[#475569] text-white font-medium shadow-lg' : 'text-slate-400 hover:bg-slate-800'}"
                 title={isCollapsed ? item.name : ""}
             >
                 <div class="shrink-0 group-hover:scale-110 transition-transform">
@@ -77,7 +73,7 @@
 
     <div class="p-3 border-t border-slate-700 bg-slate-900/50">
         <div class="flex items-center gap-3 px-3 py-2 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-[#f97316] overflow-hidden shrink-0 ring-2 ring-slate-700 flex items-center justify-center text-white font-bold text-lg">
+            <div class="w-10 h-10 rounded-xl bg-[#475569] overflow-hidden shrink-0 ring-2 ring-slate-700 flex items-center justify-center text-white font-bold text-lg">
                 A
             </div>
             {#if !isCollapsed}

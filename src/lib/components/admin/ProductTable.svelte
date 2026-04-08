@@ -69,7 +69,7 @@
                 type="text" 
                 placeholder="Buscar productos, materiales, diámetros..."
                 bind:value={searchTerm}
-                class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] outline-none transition-all text-sm"
+                class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#475569]/20 focus:border-[#475569] outline-none transition-all text-sm"
             />
             <svg class="absolute left-3 top-2.5 h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -95,7 +95,7 @@
                                 <div class="flex items-center gap-2 {col.align === 'center' ? 'justify-center' : ''}">
                                     {col.label}
                                     {#if sortColumn === col.key}
-                                        <svg class="w-3 h-3 text-[#f97316]" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg class="w-3 h-3 text-[#475569]" fill="currentColor" viewBox="0 0 20 20">
                                             {#if sortDirection === 'asc'}
                                                 <path d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" />
                                             {:else}
@@ -160,7 +160,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                                 <button 
                                     onclick={() => onEdit?.(product)}
-                                    class="p-2 text-slate-400 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all" 
+                                    class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all" 
                                     title="Editar"
                                 >
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

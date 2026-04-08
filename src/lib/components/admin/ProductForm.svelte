@@ -15,6 +15,15 @@
     let imagePreview = $state(product?.imagenUrl || '');
     let imageData = $state(''); // Base64 string
 
+    // Quick-add diameter state
+    let newDiameterMedida = $state('');
+    let newDiameterDecimal = $state('');
+    let addingDiameter = $state(false);
+    let addDiameterError = $state('');
+
+    // Track manually added diameters (auto-checked)
+    let autoCheckedIds = $state(new Set());
+
     function handleFileChange(e) {
         const file = e.target.files[0];
         if (file) {
@@ -25,6 +34,77 @@
             };
             reader.readAsDataURL(file);
         }
+    }
+
+    async function quickAddDiameter() {
+        const medida = newDiameterMedida.trim().toUpperCase();
+        if (!medida) return;
+
+        // Check if already exists
+        const exists = diametros.some(d => d.medida.toUpperCase() === medida);
+        if (exists) {
+            addDiameterError = `"${medida}" ya existe. Selecciónalo de la lista.`;
+            // Auto-check the existing one
+            const existing = diametros.find(d => d.medida.toUpperCase() === medida);
+            if (existing) {
+                autoCheckedIds = new Set([...autoCheckedIds, existing.idDiametro]);
+            }
+            newDiameterMedida = '';
+            newDiameterDecimal = '';
+            setTimeout(() => addDiameterError = '', 3000);
+            return;
+        }
+
+        addingDiameter = true;
+        addDiameterError = '';
+
+        try {
+            const formData = new FormData();
+            formData.set('medida', medida);
+            if (newDiameterDecimal) {
+                formData.set('medidaDecimal', newDiameterDecimal);
+            }
+
+            const response = await fetch('?/quickCreateDiameter', {
+                method: 'POST',
+                body: formData
+            });
+
+            const responseText = await response.text();
+
+            // SvelteKit returns devalue-serialized data, use deserialize
+            const { deserialize } = await import('$app/forms');
+            const result = deserialize(responseText);
+
+            if (result.type === 'success' && result.data) {
+                const newDiam = result.data.diameter;
+                if (newDiam?.idDiametro) {
+                    // Add to local list and auto-check it
+                    diametros = [...diametros, newDiam];
+                    autoCheckedIds = new Set([...autoCheckedIds, newDiam.idDiametro]);
+                }
+                newDiameterMedida = '';
+                newDiameterDecimal = '';
+            } else if (result.type === 'failure') {
+                addDiameterError = result.data?.message || 'Error al crear la medida.';
+                setTimeout(() => addDiameterError = '', 4000);
+            } else {
+                addDiameterError = 'Respuesta inesperada del servidor.';
+                setTimeout(() => addDiameterError = '', 4000);
+            }
+        } catch (err) {
+            console.error(err);
+            addDiameterError = 'Error de conexión. Intente nuevamente.';
+            setTimeout(() => addDiameterError = '', 4000);
+        } finally {
+            addingDiameter = false;
+        }
+    }
+
+    function isChecked(d) {
+        if (autoCheckedIds.has(d.idDiametro)) return true;
+        if (product?.diametros?.some(pd => pd.idDiametro === d.idDiametro)) return true;
+        return false;
     }
 </script>
 
@@ -54,7 +134,7 @@
         <label class="text-sm font-semibold text-slate-700 ml-1">Imagen del Producto</label>
         <div class="flex items-center gap-5">
             <div class="relative group">
-                <div class="w-24 h-24 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden transition-all group-hover:border-[#f97316]/30">
+                <div class="w-24 h-24 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden transition-all group-hover:border-[#475569]/30">
                     {#if imagePreview}
                         <img src={imagePreview} alt="Preview" class="w-full h-full object-cover" />
                     {:else}
@@ -70,7 +150,7 @@
                     type="file" 
                     accept="image/*" 
                     onchange={handleFileChange}
-                    class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#f97316]/10 file:text-[#f97316] hover:file:bg-[#f97316]/20 transition-all cursor-pointer"
+                    class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#475569]/10 file:text-[#475569] hover:file:bg-[#475569]/20 transition-all cursor-pointer"
                 />
             </div>
         </div>
@@ -86,7 +166,7 @@
             required
             placeholder='Ej: Tubo Galvanizado 1/2" x 6m...'
             oninput={(e) => { const t = /** @type {HTMLInputElement} */ (e.target); t.value = t.value.toUpperCase(); }}
-            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] outline-none transition-all placeholder:text-slate-400 text-sm uppercase"
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#475569]/20 focus:border-[#475569] outline-none transition-all placeholder:text-slate-400 text-sm uppercase"
         />
     </div>
 
@@ -97,7 +177,7 @@
                 id="idMaterial" 
                 name="idMaterial" 
                 required
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] outline-none transition-all bg-white text-sm"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#475569]/20 focus:border-[#475569] outline-none transition-all bg-white text-sm"
             >
                 <option value="">Seleccionar...</option>
                 {#each materiales as m (m.idMaterial)}
@@ -109,7 +189,52 @@
         </div>
 
         <div class="space-y-1.5 col-span-2">
-            <label class="text-sm font-semibold text-slate-700 ml-1">Diámetros / Medidas Disponibles</label>
+            <div class="flex items-center justify-between">
+                <label class="text-sm font-semibold text-slate-700 ml-1">Diámetros / Medidas Disponibles</label>
+            </div>
+
+            <!-- Quick-add inline form -->
+            <div class="flex gap-2 items-end">
+                <div class="flex-1">
+                    <input 
+                        type="text" 
+                        placeholder='Ej: 1/2", 3/4", DN50...'
+                        bind:value={newDiameterMedida}
+                        oninput={(e) => { const t = /** @type {HTMLInputElement} */ (e.target); t.value = t.value.toUpperCase(); }}
+                        onkeydown={(e) => { if (e.key === 'Enter') { e.preventDefault(); quickAddDiameter(); }}}
+                        class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#475569]/20 focus:border-[#475569] outline-none transition-all placeholder:text-slate-400 text-xs uppercase bg-white"
+                    />
+                </div>
+                <div class="w-20">
+                    <input 
+                        type="number"
+                        step="0.01" 
+                        placeholder="Decimal"
+                        bind:value={newDiameterDecimal}
+                        onkeydown={(e) => { if (e.key === 'Enter') { e.preventDefault(); quickAddDiameter(); }}}
+                        class="w-full px-2 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#475569]/20 focus:border-[#475569] outline-none transition-all placeholder:text-slate-400 text-xs bg-white"
+                    />
+                </div>
+                <button 
+                    type="button"
+                    onclick={quickAddDiameter}
+                    disabled={addingDiameter || !newDiameterMedida.trim()}
+                    class="px-3 py-2 text-xs font-bold text-white bg-[#475569] rounded-lg hover:bg-slate-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed shrink-0 flex items-center gap-1"
+                >
+                    {#if addingDiameter}
+                        <svg class="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    {:else}
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
+                    {/if}
+                    Agregar
+                </button>
+            </div>
+
+            {#if addDiameterError}
+                <p class="text-[10px] text-amber-600 font-medium ml-1">{addDiameterError}</p>
+            {/if}
+
+            <!-- Checkbox list -->
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 max-h-48 overflow-y-auto sidebar-scroll">
                 {#each diametros as d (d.idDiametro)}
                     <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white transition-all cursor-pointer border border-transparent hover:border-slate-100">
@@ -117,18 +242,18 @@
                             type="checkbox" 
                             name="idDiametros" 
                             value={d.idDiametro}
-                            checked={product?.diametros?.some(pd => pd.idDiametro === d.idDiametro)}
-                            class="w-4 h-4 rounded border-slate-300 text-[#f97316] focus:ring-[#f97316]"
+                            checked={isChecked(d)}
+                            class="w-4 h-4 rounded border-slate-300 text-[#475569] focus:ring-[#475569]"
                         />
                         <span class="text-xs font-medium text-slate-600 uppercase">{d.medida}</span>
                     </label>
                 {:else}
                     <div class="col-span-full py-4 text-center">
-                        <p class="text-xs text-slate-400">No hay diámetros registrados</p>
+                        <p class="text-xs text-slate-400">No hay diámetros registrados. Agrega uno arriba.</p>
                     </div>
                 {/each}
             </div>
-            <p class="text-[10px] text-slate-400 ml-1 font-medium italic">* Puedes seleccionar múltiples medidas para este producto</p>
+            <p class="text-[10px] text-slate-400 ml-1 font-medium italic">* Escribe y agrega medidas nuevas directamente, o selecciona las existentes</p>
         </div>
     </div>
 
@@ -141,7 +266,7 @@
             value={product?.fabricante || ''} 
             placeholder="Ej: Gerfor, Pavco, Colmena..."
             oninput={(e) => { const t = /** @type {HTMLInputElement} */ (e.target); t.value = t.value.toUpperCase(); }}
-            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] outline-none transition-all placeholder:text-slate-400 text-sm uppercase"
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#475569]/20 focus:border-[#475569] outline-none transition-all placeholder:text-slate-400 text-sm uppercase"
         />
     </div>
 
@@ -151,7 +276,7 @@
             id="estado" 
             name="estado" 
             checked={product ? product.estado : true}
-            class="w-5 h-5 rounded border-slate-300 text-[#f97316] focus:ring-[#f97316]"
+            class="w-5 h-5 rounded border-slate-300 text-[#475569] focus:ring-[#475569]"
         />
         <label for="estado" class="text-sm font-medium text-slate-700">Producto Activo / Disponible</label>
     </div>
@@ -159,7 +284,7 @@
     <button 
         type="submit" 
         disabled={loading}
-        class="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-200 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+        class="w-full bg-[#475569] hover:bg-slate-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-slate-300 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
     >
         {#if loading}
             <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>

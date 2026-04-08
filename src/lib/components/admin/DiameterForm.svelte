@@ -55,7 +55,7 @@
                         required
                         placeholder='Ej: 1/2", DN50...'
                         oninput={(e) => { const t = /** @type {HTMLInputElement} */ (e.target); t.value = t.value.toUpperCase(); }}
-                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] outline-none transition-all placeholder:text-slate-400 text-sm uppercase bg-white"
+                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#475569]/20 focus:border-[#475569] outline-none transition-all placeholder:text-slate-400 text-sm uppercase bg-white"
                     />
                 </div>
 
@@ -68,7 +68,7 @@
                         name="medidaDecimal" 
                         value={currentDiameter?.medidaDecimal || ''} 
                         placeholder="0.50"
-                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] outline-none transition-all placeholder:text-slate-400 text-sm bg-white"
+                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-[#475569]/20 focus:border-[#475569] outline-none transition-all placeholder:text-slate-400 text-sm bg-white"
                     />
                 </div>
             </div>
@@ -77,7 +77,7 @@
                 <button 
                     type="submit" 
                     disabled={loading}
-                    class="flex-1 bg-[#f97316] hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl shadow-md transition-all active:scale-[0.98] disabled:opacity-50 text-sm flex items-center justify-center gap-2"
+                    class="flex-1 bg-[#475569] hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl shadow-md transition-all active:scale-[0.98] disabled:opacity-50 text-sm flex items-center justify-center gap-2"
                 >
                     {#if loading}
                         <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
@@ -102,7 +102,7 @@
         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Diámetros Existentes</h4>
         <div class="max-h-[300px] overflow-y-auto pr-1 space-y-2 sidebar-scroll">
             {#each diametros as d (d.idDiametro)}
-                <div class="group flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-white hover:border-orange-100 hover:shadow-sm transition-all">
+                <div class="group flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-white hover:border-slate-200 hover:shadow-sm transition-all">
                     <div class="flex flex-col">
                         <span class="text-sm font-medium text-slate-700">{d.medida}</span>
                         {#if d.medidaDecimal}
@@ -112,7 +112,7 @@
                     <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button 
                             onclick={() => startEdit(d)}
-                            class="p-1.5 text-slate-400 hover:text-[#f97316] hover:bg-orange-50 rounded-lg transition-all"
+                            class="p-1.5 text-slate-400 hover:text-[#475569] hover:bg-slate-100 rounded-lg transition-all"
                             title="Editar"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

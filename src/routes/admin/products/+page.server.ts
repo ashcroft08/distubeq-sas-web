@@ -196,5 +196,31 @@ export const actions = {
 			console.error(error);
 			return fail(500, { message: 'Error al eliminar diámetro' });
 		}
+	},
+
+	// Quick create diameter from ProductForm (inline)
+	quickCreateDiameter: async ({ request }) => {
+		const data = Object.fromEntries(await request.formData());
+		try {
+			const medida = data.medida?.toString().toUpperCase().trim();
+			if (!medida) {
+				return fail(400, { message: 'La medida es obligatoria.' });
+			}
+
+			const diameterData = {
+				medida,
+				medidaDecimal: data.medidaDecimal ? parseFloat(data.medidaDecimal.toString()) : null
+			};
+
+			const newDiameter = await diameterRepository.create(diameterData);
+			return { success: true, diameter: newDiameter };
+		} catch (error) {
+			console.error(error);
+			// Check for duplicate
+			if (error?.code === '23505' || error?.message?.includes('unique')) {
+				return fail(400, { message: 'Esta medida ya existe.' });
+			}
+			return fail(500, { message: 'Error al crear la medida.' });
+		}
 	}
 };
