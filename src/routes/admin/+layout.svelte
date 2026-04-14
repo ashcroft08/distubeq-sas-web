@@ -5,11 +5,29 @@
 
 	let { children } = $props();
 
-	// Derive title and active state from path
+	let path = $derived(page.url.pathname);
+	
 	let title = $derived(
-		page.url.pathname.includes('/products') ? 'Gestión de Productos' : 'Panel de Administración'
+		path.includes('/productos') ? 'Gestión de Productos' :
+		path.includes('/categorias') ? 'Categorías de Productos' :
+		path.includes('/sucursales') ? 'Sucursales' :
+		path.includes('/nosotros') ? 'Nosotros' :
+		path.includes('/sliders') ? 'Sliders' :
+		path.includes('/contacto') ? 'Contacto' :
+		path.includes('/configuracion') ? 'Configuración de Seguridad' :
+		'Dashboard Principal'
 	);
-	let active = $derived(page.url.pathname.includes('/products') ? 'Productos' : 'Dashboard');
+
+	let active = $derived(
+		path.includes('/productos') ? 'Productos' :
+		path.includes('/categorias') ? 'Categorías' :
+		path.includes('/sucursales') ? 'Sucursales' :
+		path.includes('/nosotros') ? 'Nosotros' :
+		path.includes('/sliders') ? 'Sliders' :
+		path.includes('/contacto') ? 'Contacto' :
+		path.includes('/configuracion') ? 'Seguridad' :
+		'Dashboard'
+	);
 </script>
 
 <div class="bg-[#f8fafc] font-sans text-slate-800 flex h-screen overflow-hidden">
