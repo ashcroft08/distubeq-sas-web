@@ -205,23 +205,30 @@
                     <label class="text-sm font-bold text-slate-700 uppercase tracking-wider block">Imagen Representativa (Cuadrada)</label>
                     
                     <div class="flex flex-col items-center justify-center gap-6">
+                        <!-- Input always in DOM to ensure formData submission -->
+                        <input type="file" id="imageInput" name="image" accept="image/*" class="hidden" onchange={handleImageChange} />
+
                         {#if imagePreview}
                             <div class="relative group w-48 h-48 rounded-2xl overflow-hidden shadow-xl ring-4 ring-white">
                                 <img src={imagePreview} alt="Preview" class="w-full h-full object-cover" />
                                 <button 
                                     type="button" 
-                                    onclick={() => { imagePreview = null; imageFile = null; }}
+                                    onclick={() => { 
+                                        imagePreview = null; 
+                                        imageFile = null; 
+                                        const input = document.getElementById('imageInput');
+                                        if (input) input.value = '';
+                                    }}
                                     class="absolute inset-0 bg-red-600/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-bold"
                                 >
                                     Quitar Imagen
                                 </button>
                             </div>
                         {:else}
-                            <label class="w-full h-48 border-2 border-dashed border-slate-300 rounded-3xl flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-all group">
+                            <label for="imageInput" class="w-full h-48 border-2 border-dashed border-slate-300 rounded-3xl flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-all group">
                                 <svg class="w-12 h-12 text-slate-400 group-hover:text-blue-500 transition-colors mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
                                 <span class="text-slate-500 font-medium">Click para subir imagen</span>
                                 <span class="text-slate-400 text-xs mt-1">Sugerido: 800x800px</span>
-                                <input type="file" name="image" accept="image/*" class="hidden" onchange={handleImageChange} />
                             </label>
                         {/if}
                     </div>
