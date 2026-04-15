@@ -61,9 +61,9 @@ export const actions = {
             const diams = formData.getAll('diametros');
             diametrosList = diams.map(d => parseInt(d));
         }
-        else if (['griferia', 'materiales_electricos'].includes(tipo_producto)) {
-            specificData.descripcion_id = parseInt(formData.get('descripcion_id'));
-            if (!specificData.descripcion_id) return fail(400, { message: 'Descripción / Subtipo requerido' });
+        else if (['griferia', 'materiales_electricos', 'quimicos', 'herramientas'].includes(tipo_producto)) {
+            const cars = formData.getAll('caracteristicas');
+            diametrosList = cars.map(c => parseInt(c));
         }
 
         try {

@@ -29,6 +29,7 @@
     let material_id = $state('');
     let descripcion_id = $state('');
     let diametros = $state([]); // multiselect array
+    let caracteristicas = $state([]); // multiselect array for griferia
 
     // Inline CRUD state
     let showQuickAddModal = $state(false);
@@ -61,6 +62,7 @@
         material_id = '';
         descripcion_id = '';
         diametros = [];
+        caracteristicas = [];
         
         const fileInput = document.getElementById('imageInput');
         if (fileInput) fileInput.value = '';
@@ -102,15 +104,18 @@
                 if (detailedProd.atributos_especificos) {
                     if (['tuberias', 'linea_plastica'].includes(tipo_producto)) {
                         material_id = detailedProd.atributos_especificos.id_tuberia_material || detailedProd.atributos_especificos.id_linea_plastica_material || '';
-                    } else if (['griferia', 'materiales_electricos'].includes(tipo_producto)) {
-                        descripcion_id = detailedProd.atributos_especificos.id_descripcion_griferia || detailedProd.atributos_especificos.id_descripcion_material_electrico || '';
                     }
                 }
                 
                 if (detailedProd.diametros && Array.isArray(detailedProd.diametros)) {
-                    diametros = detailedProd.diametros;
+                    if (['griferia', 'materiales_electricos', 'quimicos', 'herramientas'].includes(tipo_producto)) {
+                        caracteristicas = detailedProd.diametros;
+                    } else {
+                        diametros = detailedProd.diametros;
+                    }
                 } else {
                     diametros = [];
+                    caracteristicas = [];
                 }
                 
                 showModal = true;
@@ -200,7 +205,7 @@
                             <th class="px-6 py-4">Fabricante</th>
                             <th class="px-6 py-4">Categoría</th>
                             <th class="px-6 py-4">Material</th>
-                            <th class="px-6 py-4">Diámetros</th>
+                            <th class="px-6 py-4">Variantes</th>
                             <th class="px-6 py-4 text-right">Acciones</th>
                         </tr>
                     </thead>
@@ -346,6 +351,8 @@
                                 <option value="hierros_galvanizados">Hierros Galvanizados</option>
                                 <option value="griferia">Grifería</option>
                                 <option value="materiales_electricos">Materiales Eléctricos</option>
+                                <option value="quimicos">Químicos</option>
+                                <option value="herramientas">Herramientas</option>
                             </select>
                             <p class="text-xs text-blue-600 mt-2">Dependiendo del tipo, aparecerán campos específicos requeridos.</p>
                         </div>
@@ -420,21 +427,23 @@
                             </div>
                         {/if}
 
-                        <!-- 3. GRIFERIA / ELECTRICOS -->
-                        {#if ['griferia', 'materiales_electricos'].includes(tipo_producto)}
+                        <!-- 3. GRIFERIA / ELECTRICOS / QUIMICOS / HERRAMIENTAS -->
+                        {#if ['griferia', 'materiales_electricos', 'quimicos', 'herramientas'].includes(tipo_producto)}
                             <div class="p-6 border border-slate-100 rounded-2xl bg-slate-50 space-y-2">
                                 <label class="text-sm font-bold text-slate-700 uppercase flex items-center justify-between">
-                                    Descripción / Clasificación
+                                    Características / Atributos
                                     <button type="button" onclick={() => triggerQuickAdd('material')} class="text-blue-600 hover:text-blue-800 text-xs flex items-center gap-1">+ Nuevo</button>
                                 </label>
-                                <select name="descripcion_id" bind:value={descripcion_id} class="w-full px-4 py-2 border rounded-xl bg-white" required>
-                                    <option value="">Seleccione...</option>
-                                    {#if catalogos[tipo_producto]?.descripciones}
-                                        {#each catalogos[tipo_producto].descripciones as desc}
-                                            <option value={desc.id_descripcion_griferia || desc.id_descripcion_material_electrico}>{desc.nombre}</option>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 bg-white p-4 border rounded-xl max-h-48 overflow-y-auto">
+                                    {#if catalogos[tipo_producto]?.caracteristicas}
+                                        {#each catalogos[tipo_producto].caracteristicas as car}
+                                            <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-blue-50 border border-transparent has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-colors">
+                                                <input type="checkbox" name="caracteristicas" value={car.id_caracteristica_griferia || car.id_caracteristica_material_electrico || car.id_caracteristica_quimico || car.id_caracteristica_herramienta} bind:group={caracteristicas} class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
+                                                <span class="text-sm font-bold text-slate-700">{car.nombre}</span>
+                                            </label>
                                         {/each}
                                     {/if}
-                                </select>
+                                </div>
                             </div>
                         {/if}
                     </div>
@@ -472,16 +481,16 @@
                         const { created, type, subType } = result.data;
                         
                         if (!catalogos[subType]) {
-                            catalogos[subType] = { materiales: [], diametros: [], descripciones: [] };
+                            catalogos[subType] = { materiales: [], diametros: [], caracteristicas: [] };
                         }
                         
                         if (type === 'material') {
                             if (catalogos[subType].materiales) catalogos[subType].materiales.push(created);
-                            if (catalogos[subType].descripciones) catalogos[subType].descripciones.push(created);
+                            if (catalogos[subType].caracteristicas) catalogos[subType].caracteristicas.push(created);
                             
                             // Autoselect it
-                            if (subType === 'griferia' || subType === 'materiales_electricos') {
-                                descripcion_id = created.id_descripcion_griferia || created.id_descripcion_material_electrico;
+                            if (['griferia', 'materiales_electricos', 'quimicos', 'herramientas'].includes(subType)) {
+                                caracteristicas = [...caracteristicas, created.id_caracteristica_griferia || created.id_caracteristica_material_electrico || created.id_caracteristica_quimico || created.id_caracteristica_herramienta];
                             } else {
                                 material_id = created.id_tuberia_material || created.id_linea_plastica_material;
                             }
@@ -560,17 +569,19 @@
                     {#if adminModalType === 'material'}
                         <option value="griferia">Grifería</option>
                         <option value="materiales_electricos">Materiales Eléctricos</option>
+                        <option value="quimicos">Químicos</option>
+                        <option value="herramientas">Herramientas</option>
                     {/if}
                 </select>
             </div>
 
             <div class="flex-1 overflow-y-auto pr-2 space-y-2">
                 {#if catalogos[adminModalSubType]}
-                    {@const renderList = adminModalType === 'material' ? (catalogos[adminModalSubType].materiales || catalogos[adminModalSubType].descripciones) : catalogos[adminModalSubType].diametros}
+                    {@const renderList = adminModalType === 'material' ? (catalogos[adminModalSubType].materiales || catalogos[adminModalSubType].caracteristicas) : catalogos[adminModalSubType].diametros}
                     
                     {#if renderList && renderList.length > 0}
                         {#each renderList as item}
-                            {@const itemId = item.id_tuberia_material || item.id_linea_plastica_material || item.id_descripcion_griferia || item.id_descripcion_material_electrico || item.id_diametro_tuberia || item.id_diametro_linea_plastica || item.id_diametro_hierro_galvanizado}
+                            {@const itemId = item.id_tuberia_material || item.id_linea_plastica_material || item.id_caracteristica_griferia || item.id_caracteristica_material_electrico || item.id_caracteristica_quimico || item.id_caracteristica_herramienta || item.id_diametro_tuberia || item.id_diametro_linea_plastica || item.id_diametro_hierro_galvanizado}
                             
                             <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-xl group transition-all hover:bg-blue-50/50">
                                 {#if editCatalogId === itemId}
