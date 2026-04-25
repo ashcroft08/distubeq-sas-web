@@ -2,10 +2,7 @@ import { pgTable, serial, varchar, text, boolean, integer, timestamp } from 'dri
 
 export const config_empresa = pgTable('config_empresa', {
     id_configuracion: serial('id_configuracion').primaryKey(),
-    linea_ventas: varchar('linea_ventas', { length: 50 }),
     correo_corporativo: varchar('correo_corporativo'),
-    whatsapp_numero: varchar('whatsapp_numero'),
-    direccion_general: varchar('direccion_general'),
     created_at: timestamp('created_at').defaultNow().notNull(),
     updated_at: timestamp('updated_at').defaultNow().notNull(),
 });

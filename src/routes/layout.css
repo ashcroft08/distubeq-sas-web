@@ -1,1 +1,78 @@
 @import 'tailwindcss';
+
+/* ================================================
+   DISTUBEQ — Industrial Premium Design System
+   ================================================ */
+
+/* Brand Colors via Tailwind v4 @theme */
+@theme {
+  --color-primary: #1b396a;
+  --color-primary-hover: #152c54;
+  --color-accent-orange: #E8660A;
+  --color-whatsapp: #25D366;
+  --color-background-light: #f8fafc;
+  --color-surface-dark: #1e293b;
+  --font-family-display: 'Montserrat', sans-serif;
+  --font-family-sans: 'Inter', sans-serif;
+}
+
+/* Base typography */
+body {
+  font-family: var(--font-family-sans);
+}
+
+h1, h2, h3, h4, h5, .font-display {
+  font-family: var(--font-family-display);
+}
+
+/* Utility backgrounds */
+.industrial-bg {
+  background: linear-gradient(135deg, #12284F 0%, #0d1d36 100%);
+}
+
+.blueprint-grid {
+  background-image:
+    linear-gradient(rgba(27, 58, 107, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27, 58, 107, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Filled form inputs */
+.form-input {
+  background-color: #f1f5f9;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  transition: all 0.2s;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  color: #1e293b;
+}
+
+.form-input:focus {
+  background-color: #ffffff;
+  border-color: #1b396a;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(27, 57, 106, 0.1);
+}
+
+.form-label {
+  display: block;
+  font-family: var(--font-family-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+/* Hide scrollbar utility */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

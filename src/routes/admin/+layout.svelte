@@ -3,7 +3,7 @@
 	import AdminHeader from '$lib/components/admin/AdminHeader.svelte';
 	import { page } from '$app/state';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
 	let path = $derived(page.url.pathname);
 	
@@ -14,7 +14,7 @@
 		path.includes('/nosotros') ? 'Nosotros' :
 		path.includes('/sliders') ? 'Sliders' :
 		path.includes('/contacto') ? 'Contacto' :
-		path.includes('/configuracion') ? 'Configuración de Seguridad' :
+		path.includes('/seguridad') ? 'Seguridad' :
 		'Dashboard Principal'
 	);
 
@@ -25,13 +25,13 @@
 		path.includes('/nosotros') ? 'Nosotros' :
 		path.includes('/sliders') ? 'Sliders' :
 		path.includes('/contacto') ? 'Contacto' :
-		path.includes('/configuracion') ? 'Seguridad' :
+		path.includes('/seguridad') ? 'Seguridad' :
 		'Dashboard'
 	);
 </script>
 
 <div class="bg-[#f8fafc] font-sans text-slate-800 flex h-screen overflow-hidden">
-	<Sidebar {active} />
+	<Sidebar {active} origin={data.origin} />
 
 	<main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
 		<AdminHeader {title} />

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:ital,wght@0,400;0,600;0,800;0,900;1,400&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1b396a",
+                        "primary-hover": "#152c54",
+                        "accent-orange": "#E8660A",
+                        "whatsapp": "#25D366",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "surface-dark": "#1e293b",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "display": ["Montserrat", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        .font-display {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .blueprint-grid {
+            background-image:
+                linear-gradient(rgba(27, 58, 107, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(27, 58, 107, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .dark .blueprint-grid {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        .industrial-bg {
+            background: linear-gradient(135deg, #12284F 0%, #0d1d36 100%);
+        }
+
+        /* Estilos de input modernos (Filled) */
+        .form-input {
+            background-color: #f1f5f9;
+            border: 1px solid transparent;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #1e293b;
+        }
+
+        .dark .form-input {
+            background-color: #0f172a;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        .form-input:focus {
+            background-color: #ffffff;
+            border-color: #1b396a;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(27, 57, 106, 0.1);
+        }
+
+        .dark .form-input:focus {
+            background-color: #1e293b;
+            border-color: #E8660A;
+            box-shadow: 0 0 0 2px rgba(232, 102, 10, 0.2);
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark .form-label {
+            color: #94a3b8;
+        }
+    </style>
+    <title>Contacto | Distubeq</title>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 flex flex-col min-h-screen antialiased">
+
+    <header
+        class="sticky-nav bg-white/95 dark:bg-surface-dark/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-6">
+            <a href="index.html" class="flex items-center shrink-0 transition-opacity hover:opacity-90">
+                <img src="./Logo_Distubeq-Photoroom.png" alt="Distubeq" class="h-12 w-auto object-contain" />
+            </a>
+
+            <div class="hidden lg:flex flex-1 max-w-xl">
+                <div
+                    class="flex w-full items-center bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 focus-within:border-primary transition-all">
+                    <span class="material-symbols-outlined text-slate-400 pl-4">search</span>
+                    <input
+                        class="flex-1 bg-transparent border-none focus:ring-0 text-sm px-3 py-2.5 h-11 outline-none text-slate-700 dark:text-slate-200"
+                        placeholder="Buscar tuberías, válvulas, conexiones..." type="text" />
+                    <button
+                        class="bg-primary hover:bg-primary-hover text-white px-5 h-full text-sm font-medium transition-colors">
+                        Buscar
+                    </button>
+                </div>
+            </div>
+
+            <nav class="flex items-center gap-8">
+                <div class="hidden xl:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+                    <a class="hover:text-primary dark:hover:text-white transition-colors" href="index.html">Inicio</a>
+                    <a class="hover:text-primary dark:hover:text-white transition-colors"
+                        href="catalogo.html">Catálogo</a>
+                    <a class="hover:text-primary dark:hover:text-white transition-colors"
+                        href="sucursales.html">Sucursales</a>
+                    <a class="hover:text-primary dark:hover:text-white transition-colors"
+                        href="nosotros.html">Nosotros</a>
+                    <a class="text-accent-orange font-semibold" href="contacto.html">Contacto</a>
+                </div>
+                <div class="flex items-center">
+                    <button id="cart-button"
+                        class="group flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm transition-all relative">
+                        <span
+                            class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">shopping_cart</span>
+                        <span class="font-semibold text-sm">Cotizar</span>
+                        <span id="cart-badge"
+                            class="absolute -top-2 -right-2 bg-accent-orange text-white text-[11px] w-5 h-5 flex items-center justify-center rounded-full font-bold"
+                            style="display: none;">0</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <section
+            class="relative pt-20 pb-16 lg:pt-28 lg:pb-24 overflow-hidden industrial-bg border-b-4 border-accent-orange">
+            <div
+                class="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] mix-blend-overlay">
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+                <div class="max-w-3xl">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="h-[2px] w-8 bg-accent-orange"></div>
+                        <span
+                            class="text-accent-orange font-display font-bold text-sm uppercase tracking-widest">Atención
+                            Corporativa</span>
+                    </div>
+
+                    <h1
+                        class="text-5xl md:text-6xl lg:text-7xl font-display font-black text-white tracking-tight leading-[1.05] mb-6">
+                        Asesorate con <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-[#ff8c3a]">Nosotros.</span>
+                    </h1>
+
+                    <p class="text-lg text-slate-300 max-w-2xl leading-relaxed font-light">
+                        Solicita tu cotización personalizada, completa el formulario y nuestro equipo de expertos te
+                        enviará una propuesta detallada en
+                        menos de 24 horas. Estamos listos para ayudarte a impulsar tu proyecto
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="blueprint-grid relative bg-background-light dark:bg-background-dark py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+                <div class="flex flex-col lg:flex-row gap-12 lg:gap-20">
+
+                    <div class="lg:w-5/12 space-y-8">
+
+                        <div>
+                            <h2 class="text-2xl font-display font-black text-primary dark:text-white mb-6">Canales
+                                Directos</h2>
+
+                            <div class="space-y-4">
+
+                                <div
+                                    class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4 hover:border-accent-orange/50 transition-colors">
+                                    <div
+                                        class="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-lg flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined text-primary dark:text-white">mail</span>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-xs font-display font-bold uppercase tracking-wider text-slate-500 mb-1">
+                                            Cotizaciones Corporativas</p>
+                                        <p class="font-bold text-primary dark:text-white">ventas@distubeq.com</p>
+                                    </div>
+                                </div>
+
+                                <a href="https://wa.me/50766778899" target="_blank"
+                                    class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4 group hover:border-[#25D366] transition-colors block">
+                                    <div
+                                        class="w-12 h-12 bg-[#25D366]/10 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-[#25D366] transition-colors">
+                                        <svg class="w-6 h-6 fill-[#25D366] group-hover:fill-white transition-colors"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.483 8.411-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.308 1.656zm6.757-4.242c1.472.873 3.123 1.335 4.811 1.336 5.231 0 9.488-4.258 9.491-9.49.002-2.535-.985-4.917-2.78-6.712-1.796-1.796-4.177-2.784-6.713-2.784-5.232 0-9.49 4.258-9.493 9.491-.001 1.932.521 3.812 1.508 5.438l-1.003 3.665 3.763-.987zm9.837-7.14c-.235-.117-1.391-.687-1.606-.765-.215-.078-.372-.117-.528.117s-.606.765-.744.922-.274.176-.509.059c-.235-.117-.992-.365-1.89-1.166-.699-.624-1.171-1.395-1.308-1.63s-.014-.363.104-.48c.106-.105.235-.274.352-.411s.156-.235.235-.391.039-.313-.02-.43c-.059-.117-.528-1.27-.724-1.74-.191-.46-.385-.397-.528-.404l-.45-.008c-.156 0-.411.059-.626.294-.215.235-.821.802-.821 1.956s.841 2.269.958 2.426c.117.157 1.654 2.525 4.007 3.541.559.242.996.387 1.337.494.562.179 1.073.154 1.477.094.45-.067 1.391-.568 1.586-1.115.195-.547.195-1.017.137-1.115s-.215-.176-.45-.293z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p
+                                            class="text-xs font-display font-bold uppercase tracking-wider text-slate-500 mb-1">
+                                            Asistencia Rápida</p>
+                                        <div class="flex items-center justify-between">
+                                            <p class="font-display font-bold text-xl text-primary dark:text-white">+593
+                                                6677-8899</p>
+                                            <span
+                                                class="material-symbols-outlined text-slate-400 group-hover:text-[#25D366] transition-colors">arrow_forward</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="bg-primary rounded-xl p-8 relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 opacity-5">
+                                <span class="material-symbols-outlined text-[120px] text-white">schedule</span>
+                            </div>
+                            <h3 class="text-white font-display font-bold text-lg mb-6 flex items-center gap-3">
+                                <span class="material-symbols-outlined text-accent-orange">watch_later</span>
+                                Horario Operativo
+                            </h3>
+                            <div class="space-y-4 text-sm relative z-10">
+                                <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                                    <span class="text-slate-300 font-medium">Lunes a Viernes</span>
+                                    <span class="text-white font-bold">08:00 AM — 05:00 PM</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                                    <span class="text-slate-300 font-medium">Sábados</span>
+                                    <span class="text-white font-bold">08:00 AM — 12:00 PM</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400 font-medium">Domingos</span>
+                                    <span
+                                        class="text-accent-orange font-bold uppercase text-xs tracking-wider">Cerrado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="lg:w-7/12">
+                        <div
+                            class="bg-white dark:bg-surface-dark p-8 md:p-10 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm h-full">
+                            <div class="mb-8">
+                                <h2 class="text-2xl font-display font-black text-primary dark:text-white mb-2">Envíenos
+                                    su Requerimiento</h2>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Complete el formulario y un
+                                    consultor técnico analizará sus necesidades antes de contactarlo.</p>
+                            </div>
+
+                            <form class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="form-label" for="nombre">Nombre o Razón Social</label>
+                                        <input class="form-input" id="nombre" type="text"
+                                            placeholder="Ej. Constructora Andina S.A." required />
+                                    </div>
+                                    <div>
+                                        <label class="form-label" for="email">Correo Electrónico</label>
+                                        <input class="form-input" id="email" type="email"
+                                            placeholder="ejemplo@empresa.com" required />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="form-label" for="telefono">Teléfono de Contacto (Opcional)</label>
+                                    <input class="form-input" id="telefono" type="tel" placeholder="+593 0000-0000" />
+                                </div>
+
+                                <div>
+                                    <label class="form-label" for="mensaje">Detalles del Proyecto o Materiales</label>
+                                    <textarea class="form-input min-h-[120px] resize-y" id="mensaje"
+                                        placeholder="Describa brevemente los diámetros, materiales (PVC, Acero, etc.) o especificaciones del proyecto..."
+                                        required></textarea>
+                                </div>
+
+                                <div class="pt-4">
+                                    <button type="button"
+                                        class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-lg font-display font-bold text-sm w-full sm:w-auto transition-colors shadow-sm">
+                                        Enviar Solicitud
+                                        <span class="material-symbols-outlined text-[18px]">send</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="relative h-[400px] bg-slate-200 dark:bg-slate-800 overflow-hidden border-t border-slate-200 dark:border-slate-800">
+            <iframe src="https://maps.google.com/maps?q=Via+Transistmica,+Panama&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                class="absolute inset-0 w-full h-full border-0 grayscale opacity-80" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+
+            <div class="absolute inset-0 bg-primary/10 pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center relative z-10 pointer-events-none">
+                <div
+                    class="bg-white dark:bg-surface-dark p-8 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xl max-w-sm pointer-events-auto">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div
+                            class="w-10 h-10 bg-accent-orange/10 rounded-full flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-accent-orange">domain</span>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-xl text-primary dark:text-white mb-1">Casa Matriz
+                            </h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                                Av. Industrial 1234, Área Industrial.<br />Ciudad de Panamá, Panamá.
+                            </p>
+                        </div>
+                    </div>
+                    <a href="sucursales.html"
+                        class="inline-flex items-center justify-center w-full gap-2 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 py-2.5 rounded-lg font-medium text-sm transition-colors mt-2">
+                        Ver todas las sucursales
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-primary text-white pt-16 pb-8 border-t-[6px] border-accent-orange">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+            <div class="col-span-1 lg:col-span-1">
+                <div class="flex items-center gap-2 mb-6">
+                    <img src="./Logo_Distubeq-Photoroom.png" alt="Distubeq" class="h-8 w-auto brightness-0 invert" />
+                    <span class="font-display text-xl font-bold tracking-tight">Distubeq</span>
+                </div>
+                <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                    Líderes en el suministro técnico de tuberías y sistemas de conducción. Calidad industrial
+                    garantizada.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-display text-sm font-bold mb-6 text-white uppercase tracking-wider">Navegación</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a class="text-slate-300 hover:text-accent-orange transition-colors"
+                            href="catalogo.html">Catálogo de Productos</a></li>
+                    <li><a class="text-slate-300 hover:text-accent-orange transition-colors"
+                            href="sucursales.html">Nuestras Sucursales</a></li>
+                    <li><a class="text-slate-300 hover:text-accent-orange transition-colors" href="nosotros.html">Sobre
+                            Nosotros</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-display text-sm font-bold mb-6 text-white uppercase tracking-wider">Contacto</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <span class="material-symbols-outlined text-accent-orange text-[20px]">location_on</span>
+                        <span>Av. Industrial 1234, Ciudad de Panamá</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-300">
+                        <span class="material-symbols-outlined text-accent-orange text-[20px]">call</span>
+                        <span>+593 800-FERRE</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-300">
+                        <span class="material-symbols-outlined text-accent-orange text-[20px]">mail</span>
+                        <span>ventas@distubeq.com</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-display text-sm font-bold mb-6 text-white uppercase tracking-wider">Ventas Corporativas
+                </h4>
+                <p class="text-slate-300 text-sm mb-4">Cotice de forma inmediata con nuestro equipo.</p>
+                <a href="https://wa.me/5079133326238"
+                    class="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b958] text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors w-full">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.483 8.411-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.308 1.656zm6.757-4.242c1.472.873 3.123 1.335 4.811 1.336 5.231 0 9.488-4.258 9.491-9.49.002-2.535-.985-4.917-2.78-6.712-1.796-1.796-4.177-2.784-6.713-2.784-5.232 0-9.49 4.258-9.493 9.491-.001 1.932.521 3.812 1.508 5.438l-1.003 3.665 3.763-.987zm9.837-7.14c-.235-.117-1.391-.687-1.606-.765-.215-.078-.372-.117-.528.117s-.606.765-.744.922-.274.176-.509.059c-.235-.117-.992-.365-1.89-1.166-.699-.624-1.171-1.395-1.308-1.63s-.014-.363.104-.48c.106-.105.235-.274.352-.411s.156-.235.235-.391.039-.313-.02-.43c-.059-.117-.528-1.27-.724-1.74-.191-.46-.385-.397-.528-.404l-.45-.008c-.156 0-.411.059-.626.294-.215.235-.821.802-.821 1.956s.841 2.269.958 2.426c.117.157 1.654 2.525 4.007 3.541.559.242.996.387 1.337.494.562.179 1.073.154 1.477.094.45-.067 1.391-.568 1.586-1.115.195-.547.195-1.017.137-1.115s-.215-.176-.45-.293z">
+                        </path>
+                    </svg>
+                    WhatsApp Business
+                </a>
+            </div>
+        </div>
+
+        <div
+            class="max-w-7xl mx-auto px-4 pt-8 border-t border-white/10 flex justify-between items-center text-slate-400 text-sm">
+            <p>© 2024 Distubeq. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+</body>
+
+</html>

@@ -12,6 +12,7 @@ export const sucursales = pgTable('sucursales', {
 
     imagen_url: varchar('imagen_url', { length: 500 }),
     imagen_public_id: varchar('imagen_public_id', { length: 200 }),
+    es_matriz: boolean('es_matriz').default(false).notNull(),
     estado: boolean('estado').default(true).notNull(),
 
     created_at: timestamp('created_at').defaultNow().notNull(),

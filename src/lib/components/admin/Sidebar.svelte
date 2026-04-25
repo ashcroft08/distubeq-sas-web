@@ -3,7 +3,7 @@
 	import { fade } from 'svelte/transition';
 	import logoImg from '$lib/assets/images/Logo_Distubeq.webp';
 
-	let { active = 'Productos' } = $props();
+	let { active = 'Productos', origin = '/' } = $props();
 	let isCollapsed = $state(false);
 
 	const menuItems = [
@@ -14,7 +14,7 @@
 		{ name: 'Nosotros', icon: 'user', path: '/admin/nosotros', id: 'nosotros' },
 		{ name: 'Sucursales', icon: 'map-pin', path: '/admin/sucursales', id: 'sucursales' },
 		{ name: 'Contacto', icon: 'mail', path: '/admin/contacto', id: 'contacto' },
-		{ name: 'Seguridad', icon: 'settings', path: '/admin/configuracion', id: 'configuracion' }
+		{ name: 'Seguridad', icon: 'lock', path: '/admin/seguridad', id: 'seguridad' }
 	];
 
 	function toggleSidebar() {
@@ -134,6 +134,15 @@
 								d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
 							/></svg
 						>
+					{:else if item.icon === 'lock'}
+						<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+							/></svg
+						>
 					{:else}
 						<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
 							><path
@@ -158,9 +167,9 @@
 	</nav>
 
 	<div class="border-t border-slate-700 bg-slate-900/50 p-3">
-		<div class="mb-4 flex items-center gap-3 px-3 py-2">
+		<div class="mb-2 flex items-center gap-3 px-2 py-1.5">
 			<div
-				class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#475569] text-lg font-bold text-white ring-2 ring-slate-700"
+				class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#475569] text-sm font-bold text-white ring-2 ring-slate-700"
 			>
 				A
 			</div>
@@ -174,13 +183,33 @@
 			{/if}
 		</div>
 
-		<form method="POST" action="/logout" use:enhance>
-			<button
-				class="group flex w-full items-center justify-center gap-3 rounded-xl border border-transparent bg-slate-800/50 px-4 py-3 text-slate-400 shadow-sm transition-all duration-300 hover:border-red-500/20 hover:bg-red-500/10 hover:text-white"
-				title={isCollapsed ? 'Cerrar Sesión' : ''}
+		<div class="flex gap-2 {isCollapsed ? 'flex-col' : ''}">
+			<a
+				href={origin}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="group flex flex-1 items-center justify-center gap-2 rounded-xl border border-transparent bg-slate-800/50 px-3 py-2.5 text-slate-400 transition-all duration-300 hover:border-blue-500/20 hover:bg-blue-500/10 hover:text-white"
+				title="Ver Sitio"
 			>
-				<div class="shrink-0 transition-transform group-hover:rotate-12">
-					<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<svg class="h-5 w-5 shrink-0 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+					/>
+				</svg>
+				{#if !isCollapsed}
+					<span in:fade={{ duration: 200, delay: 100 }} class="text-xs font-bold whitespace-nowrap">Sitio</span>
+				{/if}
+			</a>
+
+			<form method="POST" action="/logout" use:enhance class="flex-1">
+				<button
+					class="group flex w-full items-center justify-center gap-2 rounded-xl border border-transparent bg-slate-800/50 px-3 py-2.5 text-slate-400 transition-all duration-300 hover:border-red-500/20 hover:bg-red-500/10 hover:text-white"
+					title="Cerrar Sesión"
+				>
+					<svg class="h-5 w-5 shrink-0 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
 							stroke-linecap="round"
 							stroke-linejoin="round"
@@ -188,14 +217,12 @@
 							d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
 						/>
 					</svg>
-				</div>
-				{#if !isCollapsed}
-					<span in:fade={{ duration: 200, delay: 100 }} class="text-sm font-bold"
-						>Cerrar Sesión</span
-					>
-				{/if}
-			</button>
-		</form>
+					{#if !isCollapsed}
+						<span in:fade={{ duration: 200, delay: 100 }} class="text-xs font-bold whitespace-nowrap">Salir</span>
+					{/if}
+				</button>
+			</form>
+		</div>
 	</div>
 </aside>
 

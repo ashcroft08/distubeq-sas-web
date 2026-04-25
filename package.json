@@ -46,6 +46,9 @@
 	},
 	"dependencies": {
 		"cloudinary": "^2.9.0",
+		"leaflet": "^1.9.4",
+		"leaflet-geosearch": "^4.4.0",
+		"lucide-svelte": "^1.0.1",
 		"nodemailer": "^8.0.2"
 	}
 }
